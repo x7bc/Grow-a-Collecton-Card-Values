@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Value List</title>
+  <title>Game Units Value Sheet</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,87 +14,98 @@
       text-align: center;
       margin-bottom: 20px;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: #fff;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
-    th {
-      background-color: #333;
-      color: white;
-    }
     #searchInput {
-      margin-bottom: 15px;
       width: 100%;
       padding: 10px;
       font-size: 16px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+    #unit-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+    }
+    .unit-card {
+      border-radius: 8px;
+      padding: 15px;
+      width: 200px;
+      background-color: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    .unit-card:hover {
+      transform: scale(1.05);
+    }
+    .unit-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .legendary {
+      border: 2px solid gold;
+    }
+    .rare {
+      border: 2px solid silver;
+    }
+    .common {
+      border: 2px solid #ccc;
+    }
+    footer {
+      text-align: center;
+      margin-top: 30px;
     }
   </style>
 </head>
 <body>
+
   <header>
     <h1>Game Units Value Sheet</h1>
-    <p>Search for units below:</p>
-    <input type="text" id="searchInput" placeholder="Type to search..." onkeyup="searchUnits()">
+    <input type="text" id="searchInput" placeholder="Search units..." onkeyup="searchUnits()">
   </header>
 
-  <section id="game1">
-    <h2>Game 1 Units</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Unit</th>
-          <th>Value</th>
-          <th>Rank</th>
-          <th>Type / Pack</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Gold Suraiku</td>
-          <td>1000</td>
-          <td>Legendary</td>
-          <td>Event Card</td>
-        </tr>
-        <tr>
-          <td>Gold Sharchomp</td>
-          <td>800</td>
-          <td>Legendary</td>
-          <td>Event Card</td>
-        </tr>
-        <tr>
-          <td>Gold Rockem</td>
-          <td>100</td>
-          <td>Legendary</td>
-          <td>Pack: Rock</td>
-        </tr>
-        <!-- Add more units here -->
-      </tbody>
-    </table>
-  </section>
+  <div id="unit-container">
+    <div class="unit-card legendary">
+      <h3>Gold Suraiku</h3>
+      <p>Value: 1000</p>
+      <p>Rank: Legendary</p>
+      <p>Type: Event Card</p>
+    </div>
+
+    <div class="unit-card legendary">
+      <h3>Gold Sharchomp</h3>
+      <p>Value: 800</p>
+      <p>Rank: Legendary</p>
+      <p>Type: Event Card</p>
+    </div>
+
+    <div class="unit-card legendary">
+      <h3>Gold Rockem</h3>
+      <p>Value: 100</p>
+      <p>Rank: Legendary</p>
+      <p>Type: Pack: Rock</p>
+    </div>
+    <!-- Add more unit cards here -->
+  </div>
 
   <footer>
-    <p style="text-align:center; margin-top:20px;">&copy; 2025 Game Value Sheet</p>
+    <p>&copy; 2025 Game Units Value Sheet</p>
   </footer>
 
   <script>
     function searchUnits() {
       const input = document.getElementById('searchInput').value.toLowerCase();
-      const rows = document.querySelectorAll('table tbody tr');
-      rows.forEach(row => {
-        const unit = row.cells[0].textContent.toLowerCase();
-        if (unit.includes(input)) {
-          row.style.display = '';
+      const cards = document.querySelectorAll('.unit-card');
+      cards.forEach(card => {
+        const name = card.querySelector('h3').textContent.toLowerCase();
+        if(name.includes(input)) {
+          card.style.display = '';
         } else {
-          row.style.display = 'none';
+          card.style.display = 'none';
         }
       });
     }
   </script>
+
 </body>
 </html>
