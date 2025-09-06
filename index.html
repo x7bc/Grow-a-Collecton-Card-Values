@@ -473,7 +473,7 @@ Flamlett - Value: 1 - Type: Fire - Chance 1/4 | Flamlett Holo - Value: 1 - Type:
 | Nonaflare Gold - Value: 150 - Type: Fire - Chance 1/103,900 |  Nonaflare - Value: 75 - Type: Fire - Chance 1/1,039 |  Nonaflare Shiny - Value: 112 - Type: Fire - Chance 1/23,089 |  Birdey - Value: 15 - Type: Water - Chance 1/4 |  Birdey Holo - Value: 18 - Type: Water - Chance 1/37 |  Ignistone - Value: 18 - Type: Fire - Chance 1/4 |  Ignistone Holo - Value: 21 - Type: Fire - Chance 1/43 |  Birdeotto - Value: 24 - Type: Water - Chance 1/5 |  Birdeotto Shiny - Value: 36 - Type: Water - Chance 1/115 |  Moltencore - Value: 26 - Type: Fire - Chance 1/6 |  Moltencore Shiny - Value: 39 - Type: Fire - Chance 1/144 |  Spikegnar - Value: 30 - Type: Fire - Chance 1/9 |  Spikegnar Shiny - Value: 45 - Type: Fire - Chance 1/192 | Enneaflame - Value: 45 - Type: Fire - Chance 1/47 | Enneaflame Shiny - Value: 67 - Type: Fire - Chance 1/1,049 | Birdeot - Value: 65 - Type: Water - Chance 1/65 | Birdeot Shiny - Value: 97 - Type: Water - Chance 1/1,443 |
 -----Lumenox Set-----
 | Grosmite - Value: 65 - Type: Metal - Chance 1/2 | Grosmite Shiny - Value: 97 - Type: Metal - Chance 1/37 | Grosmite Gold - Value: 130 - Type: Metal - Chance 1/167 | Groshelm - Value: 75 - Type: Metal - Chance 1/3 | Groshelm Shiny - Value: 112 - Type: Metal - Chance 1/74 | Groshelm Gold  - Value: 150 - Type: Metal - Chance 1/333 | Grosseraph - Value: 80 - Type: Psychic - Chance 1/20 | Grosseraph Shiny - Value: 120 - Type: Psychic - Chance 1/444 | Grosseraph Gold - Value: 160 - Type: Psychic - Chance 1/2000 | Grosabyss - Value: 80 - Type: Dark - Chance 1/20 | Grosabyss Shiny - Value: 120 - Type: Dark - Chance 1/444 | Grosabyss Gold - Value: 160 - Type: Dark - Chance 1/2000 |
-`; // finish glitch-moonlit after youtubes break
+`;
 
                 this.cardData = this.parseCardData(rawData);
             }
@@ -488,7 +488,7 @@ Flamlett - Value: 1 - Type: Fire - Chance 1/4 | Flamlett Holo - Value: 1 - Type:
                     const entries = cardBlock.split('|').map(s => s.trim()).filter(s => s !== "");
 
                     entries.forEach(entry => {
-                        const match = entry.match(/(.*?) - CP\/s: (\d+) - Type: (\w+)(?: - Chance ([\d\/,]+))?/);
+                        const match = entry.match(/(.*?) - Value: (\d+) - Type: (\w+)(?: - Chance ([\d\/,]+))?/);
                         if (match) {
                             const chanceStr = match[4] || '1/1';
                             let denominator = 1;
@@ -529,12 +529,12 @@ Flamlett - Value: 1 - Type: Fire - Chance 1/4 | Flamlett Holo - Value: 1 - Type:
 
             setupEventListeners() {
                 document.getElementById('search-input').addEventListener('input', (e) => {
-                    this.activeFilters.search = e.target.Value;
+                    this.activeFilters.search = e.target.value;
                     this.applyFiltersAndSort();
                 });
 
                 document.getElementById('sort-select').addEventListener('change', (e) => {
-                    this.sortBy = e.target.Value;
+                    this.sortBy = e.target.value;
                     this.applyFiltersAndSort();
                 });
 
@@ -811,4 +811,5 @@ createCardHTML(card) {
 </body>
 
 </html>
+
 
