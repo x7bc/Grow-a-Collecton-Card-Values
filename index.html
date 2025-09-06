@@ -1,92 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vaulted Values</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Value List</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
+      margin: 20px;
+      background-color: #f0f0f0;
     }
-    h1 {
+    header {
       text-align: center;
+      margin-bottom: 20px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 20px;
-      background: white;
+      background-color: #fff;
     }
     th, td {
-      padding: 12px;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
+      padding: 10px;
       text-align: center;
     }
     th {
-      background: #333;
+      background-color: #333;
       color: white;
     }
-    tr:nth-child(even) {
-      background: #f9f9f9;
-    }
-    .search {
-      display: block;
-      margin: 0 auto 20px auto;
+    #searchInput {
+      margin-bottom: 15px;
+      width: 100%;
       padding: 10px;
-      width: 50%;
       font-size: 16px;
     }
   </style>
 </head>
 <body>
-  <h1>Grow a Collection Card Values</h1>
+  <header>
+    <h1>Game Units Value Sheet</h1>
+    <p>Search for units below:</p>
+    <input type="text" id="searchInput" placeholder="Type to search..." onkeyup="searchUnits()">
+  </header>
 
-  <input 
-    type="text" 
-    id="search" 
-    class="search" 
-    placeholder="Search for a unit..."
-    onkeyup="searchTable()"
-  />
+  <section id="game1">
+    <h2>Game 1 Units</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Unit</th>
+          <th>Value</th>
+          <th>Rank</th>
+          <th>Type / Pack</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Gold Suraiku</td>
+          <td>1000</td>
+          <td>Legendary</td>
+          <td>Event Card</td>
+        </tr>
+        <tr>
+          <td>Gold Sharchomp</td>
+          <td>800</td>
+          <td>Legendary</td>
+          <td>Event Card</td>
+        </tr>
+        <tr>
+          <td>Gold Rockem</td>
+          <td>100</td>
+          <td>Legendary</td>
+          <td>Pack: Rock</td>
+        </tr>
+        <!-- Add more units here -->
+      </tbody>
+    </table>
+  </section>
 
-  <table id="valuesTable">
-    <thead>
-      <tr>
-        <th>Unit</th>
-        <th>Type</th>
-        <th>Trade Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Soldier</td>
-        <td>Basic</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td>Knight</td>
-        <td>Advanced</td>
-        <td>50</td>
-      </tr>
-      <tr>
-        <td>Dragon</td>
-        <td>Legendary</td>
-        <td>500</td>
-      </tr>
-    </tbody>
-  </table>
+  <footer>
+    <p style="text-align:center; margin-top:20px;">&copy; 2025 Game Value Sheet</p>
+  </footer>
 
   <script>
-    function searchTable() {
-      let input = document.getElementById("search").value.toLowerCase();
-      let rows = document.querySelectorAll("#valuesTable tbody tr");
-
+    function searchUnits() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const rows = document.querySelectorAll('table tbody tr');
       rows.forEach(row => {
-        let text = row.innerText.toLowerCase();
-        row.style.display = text.includes(input) ? "" : "none";
+        const unit = row.cells[0].textContent.toLowerCase();
+        if (unit.includes(input)) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
       });
     }
   </script>
