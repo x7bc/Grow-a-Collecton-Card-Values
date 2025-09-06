@@ -1,144 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Units Collection</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #121212;
-    color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  header {
-    padding: 20px;
-    text-align: center;
-    background-color: #1f1f1f;
-  }
-  header h1 {
-    margin: 0;
-  }
-  #searchBar {
-    display: block;
-    margin: 20px auto;
-    padding: 10px;
-    width: 80%;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-  }
-  #filterButtons {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  #filterButtons button {
-    margin: 5px;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-  }
-  #unitContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 15px;
-    padding: 0 20px 20px 20px;
-  }
-  .unitCard {
-    background-color: #1f1f1f;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-    transition: transform 0.2s;
-  }
-  .unitCard:hover {
-    transform: scale(1.05);
-  }
-  .unitCard h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-  }
-  .legendary { border-left: 4px solid gold; }
-  .rare { border-left: 4px solid silver; }
-  .common { border-left: 4px solid gray; }
-  footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #1f1f1f;
-    margin-top: 20px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Stats</title>
+    <style>
+        :root {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-tertiary: #f1f5f9;
+            --border-primary: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #64748b;
+            --accent-green: #22c55e;
+            --accent-green-hover: #16a34a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --border-primary: #475569;
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --accent-green: #22c55e;
+            --accent-green-hover: #16a34a;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-green), #4ade80, #86efac);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-summary {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .stats-grid {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-green);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+        }
+
+        .card-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            width: 150px;
+            text-align: center;
+        }
+
+        .card-name {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-value {
+            color: var(--accent-green);
+        }
+    </style>
 </head>
 <body>
 
-<header>
-  <h1>Game Units Collection</h1>
-  <input type="text" id="searchBar" placeholder="Search units..." onkeyup="searchUnits()">
-</header>
+    <div class="header">
+        <h1>Card Stats Summary</h1>
+    </div>
 
-<div id="filterButtons">
-  <button onclick="filterUnits('all')">All</button>
-  <button onclick="filterUnits('legendary')">Legendary</button>
-  <button onclick="filterUnits('rare')">Rare</button>
-  <button onclick="filterUnits('common')">Common</button>
-</div>
+    <div class="stats-summary" id="stats-summary">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-number" id="total-cards">0</span>
+                <span class="stat-label">Total Cards</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="currently-displayed-cards">0</span>
+                <span class="stat-label">Currently Displayed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number" id="total-sets">0</span>
+                <span class="stat-label">Sets</span>
+            </div>
+        </div>
+    </div>
 
-<div id="unitContainer">
-  <div class="unitCard legendary">
-    <h3>Gold Suraiku</h3>
-    <p>Value: 1000</p>
-    <p>Rank: Legendary</p>
-    <p>Type: Event Card</p>
-  </div>
-  <div class="unitCard legendary">
-    <h3>Gold Sharchomp</h3>
-    <p>Value: 800</p>
-    <p>Rank: Legendary</p>
-    <p>Type: Event Card</p>
-  </div>
-  <div class="unitCard legendary">
-    <h3>Gold Rockem</h3>
-    <p>Value: 100</p>
-    <p>Rank: Legendary</p>
-    <p>Type: Pack: Rock</p>
-  </div>
-  <!-- Add more unit cards here -->
-</div>
+    <div class="card-list" id="card-list">
+        <!-- Cards will appear here -->
+    </div>
 
-<footer>
-  &copy; 2025 Game Units Collection
-</footer>
+    <script>
+        const cardDataText = `
+----- Basic Set -----
+Card A - Value: 100 - Type: Common
+Card B - Value: 250 - Type: Uncommon
+Card C - Value: 500 - Type: Rare
+----- Advanced Set -----
+Card D - Value: 750 - Type: Rare
+Card E - Value: 1200 - Type: Epic
+`;
 
-<script>
-function searchUnits() {
-  const input = document.getElementById('searchBar').value.toLowerCase();
-  const cards = document.querySelectorAll('.unitCard');
-  cards.forEach(card => {
-    const name = card.querySelector('h3').textContent.toLowerCase();
-    if(name.includes(input)) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
+        function parseCardData(text) {
+            const cards = [];
+            const sets = text.trim().split(/-----\s*([^-]+?)\s*-----/);
 
-function filterUnits(rank) {
-  const cards = document.querySelectorAll('.unitCard');
-  cards.forEach(card => {
-    if(rank === 'all') {
-      card.style.display = '';
-    } else if(card.classList.contains(rank)) {
-      card.style.display = '';
-    } else {
-      card.style.display = 'none';
-    }
-  });
-}
-</script>
+            for (let i = 1; i < sets.length; i += 2) {
+                const setName = sets[i].trim();
+                const cardBlock = sets[i + 1].trim();
+                const entries = cardBlock.split('\n').map(s => s.trim()).filter(s => s !== "");
+
+                entries.forEach(entry => {
+                    const match = entry.match(/(.*?) - Value: (\d+) - Type: (\w+)/);
+                    if (match) {
+                        cards.push({
+                            name: match[1].trim(),
+                            value: parseInt(match[2], 10),
+                            type: match[3].trim(),
+                            set: setName
+                        });
+                    }
+                });
+            }
+
+            return cards;
+        }
+
+        function displayCards(cards) {
+            const listEl = document.getElementById('card-list');
+            listEl.innerHTML = '';
+
+            cards.forEach(card => {
+                const cardEl = document.createElement('div');
+                cardEl.classList.add('card');
+                cardEl.innerHTML = `
+                    <div class="card-name">${card.name}</div>
+                    <div class="card-value">Value: ${card.value}</div>
+                    <div class="card-type">${card.type}</div>
+                    <div class="card-set">${card.set}</div>
+                `;
+                listEl.appendChild(cardEl);
+            });
+
+            document.getElementById('total-cards').innerText = cards.length;
+            const uniqueSets = [...new Set(cards.map(c => c.set))];
+            document.getElementById('total-sets').innerText = uniqueSets.length;
+            document.getElementById('currently-displayed-cards').innerText = cards.length;
+        }
+
+        const cards = parseCardData(cardDataText);
+        displayCards(cards);
+    </script>
 
 </body>
 </html>
