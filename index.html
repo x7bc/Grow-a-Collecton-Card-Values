@@ -484,7 +484,7 @@ Flamlett - Value: 1 - Type: Fire - Chance 1/4 - Image: https://imgur.com/a/rS725
                     const entries = cardBlock.split('|').map(s => s.trim()).filter(s => s !== "");
 
                     entries.forEach(entry => {
-                        const match = entry.match(/(.*?) - Value: (\d+) - Type: (\w+)(?: - Chance ([\d\/,]+))?/);
+                        const match = entry.match(/(.*?) - Value: (\d+) - Type: (\w+)(?: - Chance ([\d\/,]+))?(?: - Image: (.+))?/);
                         if (match) {
                             const chanceStr = match[4] || '1/1';
                             let denominator = 1;
@@ -809,6 +809,7 @@ createCardHTML(card) {
 </body>
 
 </html>
+
 
 
 
